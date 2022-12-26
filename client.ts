@@ -62,16 +62,17 @@ async function tryGetResponse(message: Message) {
     method: 'post',
     url: 'http://127.0.0.1:3000/message',
     data: {
-      message
+      message,
+      talker: message.talker,
+      listener: message.listener,
+      room: message.room
     }
   });
   console.log('receive from cus server with data %o', response.data);
   return response.data
 }
 
-async function handleAction(message: Message) {
 
-}
 
 function onError(e: Error) {
   console.error('Bot error:', e)
