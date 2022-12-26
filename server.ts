@@ -1,6 +1,6 @@
-const Koa = require('koa');
-const Router = require('@koa/router');
-const { koaBody } = require('koa-body');
+import Koa from 'koa';
+import Router from '@koa/router';
+import { koaBody } from 'koa-body';
 
 
 
