@@ -15,6 +15,7 @@ router.get('/', (ctx, next) => {
 const ME = '@48e818fe15472f801adf9ff42625a1dcaabbedb1447595af0e49658d67e390de'
 const MINMIN = '@bd60b772c2d973375c77721fd4f9c6a3209c8669ca20f29584f994000f587b4f'
 const TEST_ROMM_ID = '@@955a0636df1faaaefb23f06d3dedea4c4513971063d89d8c3952ba3e36103400'
+const ACTION_ROOM_IDS = [TEST_ROMM_ID]
 /**
  * message: {
     _events: {},
@@ -49,14 +50,15 @@ router.post('/message', (ctx, next) => {
             console.log('warn ignore')
         }
         // Wechat bot 群
-    } else if (payload.roomId === TEST_ROMM_ID) {
-        if (payload.text === '@amanoooo ding') {
-            return ctx.body = {
-                code: 0,
-                data: 'ok in room',
-            }
-        } else {
-            console.log('warn ignore with room')
+    } else if (
+        ACTION_ROOM_IDS.indexOf(payload.roomId) > -1
+        && payload?.mentionIdList?.indexOf(ME) > -1
+    ) {
+        const question = payload.text.split(' ').slice(1).join(' ')
+        console.log('question', question)
+        return ctx.body = {
+            code: 0,
+            data: 'ok in room',
         }
     }
     return ctx.body = {
