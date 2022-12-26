@@ -27,7 +27,9 @@ const ACTION_ROOM_IDS = [
     //  Wechat bot 群
     '@@955a0636df1faaaefb23f06d3dedea4c4513971063d89d8c3952ba3e36103400',
     // jane 和小号
-    "@@df378bea2317bf4448e27a2d428cd4801bed826181c86edc4217ddbfe74539cb"
+    "@@df378bea2317bf4448e27a2d428cd4801bed826181c86edc4217ddbfe74539cb",
+    // 工作无关群
+    "@@ad37302f11056be8739c9dbc98b915ee4f2fb1e491c35be8f8bf573db22fe525",
 ];
 /**
  * message: {
