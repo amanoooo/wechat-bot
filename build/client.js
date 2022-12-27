@@ -63,9 +63,9 @@ function tryGetResponse(message) {
             url: 'http://127.0.0.1:3000/message',
             data: {
                 message,
-                talker: message.talker,
-                listener: message.listener,
-                room: message.room
+                talker: message.talker(),
+                listener: message.listener(),
+                room: message.room()
             }
         });
         console.log('receive from cus server with data %o', response.data);

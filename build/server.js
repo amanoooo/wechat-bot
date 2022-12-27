@@ -23,13 +23,12 @@ router.get('/', (ctx, next) => {
 });
 const ME = '@48969f78eb66a9e8e674ce31fe9c6a09a4174bff2baed8f28429afb18a69146d';
 const MINMIN = '@bd60b772c2d973375c77721fd4f9c6a3209c8669ca20f29584f994000f587b4f';
-const ACTION_ROOM_IDS = [
-    //  Wechat bot 群
-    '@@955a0636df1faaaefb23f06d3dedea4c4513971063d89d8c3952ba3e36103400',
-    // jane 和小号
-    "@@df378bea2317bf4448e27a2d428cd4801bed826181c86edc4217ddbfe74539cb",
-    // 工作无关群
-    "@@ad37302f11056be8739c9dbc98b915ee4f2fb1e491c35be8f8bf573db22fe525",
+const ROOM_TOPICS = [
+    'Jane和小号',
+    "工作无关群",
+    "Wechat Bot",
+    "上海慕孜元老会",
+    "田林公益事业群",
 ];
 /**
  * message: {
@@ -51,28 +50,24 @@ const ACTION_ROOM_IDS = [
   }
  */
 router.post('/message', (ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c;
     console.log('receive /message %o', ctx.request.body);
     const body = ctx.request.body;
-    const payload = body.message.payload;
-    // 敏敏发给我的
-    if ((payload === null || payload === void 0 ? void 0 : payload.talkerId) === MINMIN
-        && (payload === null || payload === void 0 ? void 0 : payload.listenerId) === ME) {
-        if ((payload === null || payload === void 0 ? void 0 : payload.text) === 'ding') {
-            console.log('receive ding');
-            return ctx.body = {
-                code: 0,
-                data: 'ok in pair',
-            };
-        }
-        else {
-            console.log('warn ignore');
-        }
-        //授权的聊天群
+    const msgPayload = body.message.payload;
+    const roomPayload = (_a = body.room) === null || _a === void 0 ? void 0 : _a.payload;
+    const talkerPayload = (_b = body.talker) === null || _b === void 0 ? void 0 : _b.payload;
+    if (!msgPayload.text.trim()) {
+        console.log('empty msg');
+        return;
     }
-    else if (ACTION_ROOM_IDS.indexOf(payload.roomId) > -1
-        && ((_a = payload.mentionIdList) === null || _a === void 0 ? void 0 : _a.indexOf(ME)) > -1) {
-        const question = payload.text.split(' ').slice(1).join(' ');
+    if (roomPayload.topic &&
+        ROOM_TOPICS.indexOf(roomPayload.topic) > -1
+        && ((_c = msgPayload.text) === null || _c === void 0 ? void 0 : _c.startsWith('@amanoooo'))) {
+        const question = msgPayload.text.replace('@amanoooo', '');
+        if (question == '') {
+            console.log('return due to empty string');
+            return;
+        }
         console.log('question', question);
         const answer = yield (0, openai_1.fetchAnswer)(question);
         return ctx.body = {
@@ -90,5 +85,5 @@ app
     .use(router.routes())
     .use(router.allowedMethods());
 app.listen(3000, () => {
-    console.log("server started");
+    console.log("server started with pid", process.pid);
 });
