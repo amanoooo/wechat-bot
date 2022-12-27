@@ -21,6 +21,7 @@ const router = new router_1.default();
 router.get('/', (ctx, next) => {
     // ctx.router available
 });
+const botName = process.env.BOT_NAME || '@小号';
 const ROOM_TOPICS = [
     'Jane和小号',
     "工作无关群",
@@ -62,8 +63,8 @@ router.post('/message', (ctx, next) => __awaiter(void 0, void 0, void 0, functio
     }
     if (roomPayload.topic &&
         ROOM_TOPICS.indexOf(roomPayload.topic) > -1
-        && ((_c = msgPayload.text) === null || _c === void 0 ? void 0 : _c.startsWith('@amanoooo'))) {
-        const question = msgPayload.text.replaceAll('@amanoooo', '');
+        && ((_c = msgPayload.text) === null || _c === void 0 ? void 0 : _c.startsWith(botName))) {
+        const question = msgPayload.text.replaceAll(botName, '');
         if (question == '') {
             console.log('return due to empty string');
             return;

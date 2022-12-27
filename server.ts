@@ -12,6 +12,7 @@ router.get('/', (ctx, next) => {
     // ctx.router available
 });
 
+const botName = process.env.BOT_NAME || '@小号'
 
 const ROOM_TOPICS = [
     'Jane和小号',
@@ -52,16 +53,16 @@ router.post('/message', async (ctx, next) => {
 
     if (!msgPayload.text.trim() || !roomPayload) {
         console.log('empty msg or room');
-        return 
+        return
     }
 
     if (
         roomPayload.topic &&
         ROOM_TOPICS.indexOf(roomPayload.topic) > -1
-        && msgPayload.text?.startsWith('@amanoooo')
+        && msgPayload.text?.startsWith(botName)
     ) {
 
-        const question = msgPayload.text.replaceAll('@amanoooo', '') as string
+        const question = msgPayload.text.replaceAll(botName, '') as string
         if (question == '') {
             console.log('return due to empty string')
             return
