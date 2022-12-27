@@ -21,8 +21,6 @@ const router = new router_1.default();
 router.get('/', (ctx, next) => {
     // ctx.router available
 });
-const ME = '@48969f78eb66a9e8e674ce31fe9c6a09a4174bff2baed8f28429afb18a69146d';
-const MINMIN = '@bd60b772c2d973375c77721fd4f9c6a3209c8669ca20f29584f994000f587b4f';
 const ROOM_TOPICS = [
     'Jane和小号',
     "工作无关群",
@@ -58,8 +56,8 @@ router.post('/message', (ctx, next) => __awaiter(void 0, void 0, void 0, functio
     const msgPayload = body.message.payload;
     const roomPayload = (_a = body.room) === null || _a === void 0 ? void 0 : _a.payload;
     const talkerPayload = (_b = body.talker) === null || _b === void 0 ? void 0 : _b.payload;
-    if (!msgPayload.text.trim()) {
-        console.log('empty msg');
+    if (!msgPayload.text.trim() || !roomPayload) {
+        console.log('empty msg or room');
         return;
     }
     if (roomPayload.topic &&
