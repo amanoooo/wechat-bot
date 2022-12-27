@@ -21,6 +21,8 @@ const ROOM_TOPICS = [
     "Wechat Bot",
     "上海慕孜元老会",
     "田林公益事业群",
+    "嘎嘎嘎",
+    "COACH可以聚餐了",
 ]
 /**
  * message: {
@@ -61,7 +63,7 @@ router.post('/message', async (ctx, next) => {
         && msgPayload.text?.startsWith('@amanoooo')
     ) {
 
-        const question = msgPayload.text.replace('@amanoooo', '') as string
+        const question = msgPayload.text.replaceAll('@amanoooo', '') as string
         if (question == '') {
             console.log('return due to empty string')
             return

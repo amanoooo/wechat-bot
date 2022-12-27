@@ -31,7 +31,7 @@ function fetchAnswer(question) {
             }
         });
         console.log('receive', response.data);
-        return response.data.choices[0].text.replace('\n', '');
+        return response.data.choices[0].text.replaceAll('\n', '');
     });
 }
 exports.fetchAnswer = fetchAnswer;
